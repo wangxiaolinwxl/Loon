@@ -8,17 +8,17 @@
 ============Quantumultx===============
 [task_local]
 #京东手机年终奖
-30 9 * * * https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, tag=京东手机年终奖, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_festival2.jpg, enabled=true
+15 0 * * * https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, tag=京东手机年终奖, img-url=https://raw.githubusercontent.com/yogayyy/Scripts/master/Icon/shylocks/jd_festival2.jpg, enabled=true
 
 ================Loon==============
 [Script]
-cron "30 9 * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, tag=京东手机年终奖
+cron "15 0 * * *" script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, tag=京东手机年终奖
 
 ===============Surge=================
-京东手机年终奖 = type=cron,cronexp="30 9 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js
+京东手机年终奖 = type=cron,cronexp="15 0 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js
 
 ============小火箭=========
-京东手机年终奖 = type=cron,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, cronexpr="30 9 * * *", timeout=3600, enable=true
+京东手机年终奖 = type=cron,script-path=https://raw.githubusercontent.com/shylocks/Loon/main/jd_festival.js, cronexpr="15 0 * * *", timeout=3600, enable=true
  */
 const $ = new Env('京东手机年终奖');
 
@@ -487,7 +487,6 @@ function getTs() {
 function taskPostUrl(function_id, body = {}) {
   const t = getTs()
   let n = {
-    t: t,
     ...body
   }
   let str = ''
@@ -512,7 +511,7 @@ function taskPostUrl(function_id, body = {}) {
       'dnt': '1',
       'pragma': 'no-cache',
       'sign': sign(n, `d55b480bed0545839dbd8b78b6cffdb1${t}`, `/sf/${function_id}`),
-      'timestamp': $.isQuanX()?t.toString():t,
+      'timestamp': ($.isQuanX()||$.isSurge()) ?t.toString():t,
       "User-Agent": $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.141"
     )
     }
@@ -546,7 +545,7 @@ function taskUrl(function_id, body = {}) {
       'dnt': '1',
       'pragma': 'no-cache',
       'sign': sign(n, `d55b480bed0545839dbd8b78b6cffdb1${t}`, `/sf/${function_id}`),
-      'timestamp': $.isQuanX()?t.toString():t,
+      'timestamp': ($.isQuanX()||$.isSurge()) ?t.toString():t,
       "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.141"
     }
   }
